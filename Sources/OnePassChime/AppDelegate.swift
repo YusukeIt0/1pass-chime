@@ -10,6 +10,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private let watcher = PromptWatcher()
     private let player = SoundPlayer()
     private var alert = AlertState()
+    private var clicks = ClickAttribution()
+    private var clickMonitor: Any?
     private var observation = PromptWatcher.Observation(onePasswordRunning: false, promptIDs: [])
     private var statusItem: NSStatusItem!
     private var shownWaiting: Bool?
@@ -31,6 +33,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .sink { [weak self] _ in self?.updateIcon() }
             .store(in: &cancellables)
 
+        // Mouse clicks elsewhere can be observed without any permission (keys can't, and aren't).
+        // Only whether a click hit a menu bar is used, to recognise 1Password's own menu bar panel.
+        clickMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
+            MainActor.assumeIsolated { self?.mouseDown() }
+        }
         watcher.onObserve = { [weak self] in self?.handle($0) }
         watcher.start()
         updates.start()
@@ -42,11 +49,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
     // MARK: Prompts
 
+    private func mouseDown() {
+        let screens = NSScreen.screens.map { (frame: $0.frame, visible: $0.visibleFrame) }
+        guard MenuBarHit.isInMenuBar(NSEvent.mouseLocation, screens: screens) else { return }
+        clicks.menuBarClicked(at: Date())
+        log("menu bar click")
+    }
+
     private func handle(_ obs: PromptWatcher.Observation) {
         let now = Date()
         let wasVisible = alert.isPromptVisible
-        let due = alert.update(prompts: obs.promptIDs, now: now, policy: settings.policy)
-        if obs != observation { log("observed running=\(obs.onePasswordRunning) prompts=\(obs.promptIDs.sorted())") }
+        let prompts = clicks.prompts(from: obs.promptIDs, now: now)
+        let due = alert.update(prompts: prompts, now: now, policy: settings.policy)
+        if obs != observation {
+            log("observed running=\(obs.onePasswordRunning) windows=\(obs.promptIDs.sorted()) prompts=\(prompts.sorted())")
+        }
         observation = obs
         if due, !settings.paused, player.play(settings.sound, volume: settings.volume) {
             alert.markPlayed(now)

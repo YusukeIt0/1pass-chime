@@ -27,7 +27,7 @@ final class PromptDetectorTests: XCTestCase {
         XCTAssertFalse(PromptDetector.isApprovalPrompt(w(op, layer: 101, title: nil, 550, 108)))
         XCTAssertFalse(PromptDetector.isApprovalPrompt(w(op, layer: 101, title: nil, 550, 188)))
         XCTAssertFalse(PromptDetector.isApprovalPrompt(w(op, layer: 101, title: nil, 550, 420)))
-        // Menu bar panel.
+        // A 1Password window on level 3 (seen once, 416 × 312).
         XCTAssertFalse(PromptDetector.isApprovalPrompt(w(op, layer: 3, title: "1Password", 416, 312)))
         XCTAssertFalse(PromptDetector.isApprovalPrompt(w(op, layer: 3, title: nil, 416, 312)))
         // Main window.
@@ -65,6 +65,72 @@ final class PromptDetectorTests: XCTestCase {
         noTitle[kCGWindowName as String] = ""
         XCTAssertNil(WindowInfo(windowList: noTitle) { _ in nil }?.title, "empty title counts as hidden")
         XCTAssertNil(WindowInfo(windowList: [:]) { _ in nil })
+    }
+}
+
+final class ClickAttributionTests: XCTestCase {
+    let t0 = Date(timeIntervalSince1970: 1_000)
+
+    func testMenuBarPanelLooksLikeAPromptOnItsOwn() {
+        // Observed: the menu bar panel is 405 × 291 on level 101 with no title.
+        let panel = WindowInfo(number: 17861, ownerPID: 2770, bundleID: PromptDetector.bundleID, layer: 101,
+                               title: nil, width: 405, height: 291)
+        XCTAssertTrue(PromptDetector.isApprovalPrompt(panel), "size alone can't tell; ClickAttribution does")
+    }
+
+    func testWindowRightAfterMenuBarClickIsIgnoredWhileOpen() {
+        var c = ClickAttribution()
+        c.menuBarClicked(at: t0)
+        XCTAssertEqual(c.prompts(from: [17861], now: t0 + 0.5), [])
+        XCTAssertEqual(c.prompts(from: [17861], now: t0 + 5), [], "stays ignored while open")
+        XCTAssertEqual(c.prompts(from: [], now: t0 + 6), [])
+        XCTAssertEqual(c.ignored, [])
+    }
+
+    func testPromptWithoutClickCounts() {
+        var c = ClickAttribution()
+        XCTAssertEqual(c.prompts(from: [1], now: t0), [1])
+    }
+
+    func testPromptLongAfterClickCounts() {
+        var c = ClickAttribution()
+        c.menuBarClicked(at: t0)
+        XCTAssertEqual(c.prompts(from: [1], now: t0 + ClickAttribution.window + 0.1), [1])
+    }
+
+    func testPromptAlreadyOnScreenBeforeClickStillCounts() {
+        var c = ClickAttribution()
+        XCTAssertEqual(c.prompts(from: [1], now: t0), [1])
+        c.menuBarClicked(at: t0 + 1)
+        XCTAssertEqual(c.prompts(from: [1, 2], now: t0 + 1.4), [1], "only the new window is the user's panel")
+    }
+}
+
+final class MenuBarHitTests: XCTestCase {
+    // The Mac this was built on: built-in display with the menu bar, one display to the left,
+    // one above (AppKit coordinates).
+    let screens: [(frame: CGRect, visible: CGRect)] = [
+        (CGRect(x: 0, y: 0, width: 1728, height: 1117), CGRect(x: 0, y: 0, width: 1728, height: 1080)),
+        (CGRect(x: -1080, y: -41, width: 1080, height: 1920), CGRect(x: -1080, y: -41, width: 1080, height: 1895)),
+        (CGRect(x: 0, y: 1117, width: 1920, height: 1080), CGRect(x: 0, y: 1117, width: 1920, height: 1055)),
+    ]
+
+    func testMenuBars() {
+        XCTAssertTrue(MenuBarHit.isInMenuBar(CGPoint(x: 1400, y: 1105), screens: screens))
+        XCTAssertTrue(MenuBarHit.isInMenuBar(CGPoint(x: -500, y: 1870), screens: screens))
+        XCTAssertTrue(MenuBarHit.isInMenuBar(CGPoint(x: 1800, y: 2190), screens: screens))
+    }
+
+    func testElsewhere() {
+        XCTAssertFalse(MenuBarHit.isInMenuBar(CGPoint(x: 1400, y: 900), screens: screens))
+        XCTAssertFalse(MenuBarHit.isInMenuBar(CGPoint(x: -500, y: 1000), screens: screens))
+        XCTAssertFalse(MenuBarHit.isInMenuBar(CGPoint(x: 1800, y: 1500), screens: screens))
+    }
+
+    func testHiddenMenuBarUsesMinimumHeight() {
+        let s = [(frame: CGRect(x: 0, y: 0, width: 1000, height: 800), visible: CGRect(x: 0, y: 0, width: 1000, height: 800))]
+        XCTAssertTrue(MenuBarHit.isInMenuBar(CGPoint(x: 10, y: 790), screens: s))
+        XCTAssertFalse(MenuBarHit.isInMenuBar(CGPoint(x: 10, y: 700), screens: s))
     }
 }
 
