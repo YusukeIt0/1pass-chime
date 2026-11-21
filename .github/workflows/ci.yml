@@ -1,0 +1,21 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unit tests (includes language file checks)
+        run: swift test
+      - name: Build the app as released
+        run: scripts/build-app.sh 0.0.0-ci
+      - name: Check the language files inside the built app
+        run: '"dist/1PassChime.app/Contents/MacOS/OnePassChime" --check-languages'
+      - run: sh -n install.sh
