@@ -40,12 +40,13 @@ public struct WindowInfo: Equatable, Sendable {
     }
 }
 
-/// Decides which windows are 1Password asking for approval (SSH key use, CLI sign-in, …).
+/// Decides which windows look like 1Password asking for approval (SSH key use, CLI sign-in, …).
 ///
 /// Observed with 1Password 8.12 on macOS 27: the approval window is a 1Password window on the
-/// pop-up level (101), about 400 pt wide, titled "1Password". Other 1Password windows differ:
-/// the main window is on the normal level (0), the menu bar panel on level 3, and Quick Access
-/// is on level 101 too but 550 pt wide and titled "Quick Access — 1Password" (localized).
+/// pop-up level (101), 400 pt wide, titled "1Password". The main window is on the normal level
+/// (0). Quick Access is on level 101 too but 550 pt wide and titled "Quick Access — 1Password"
+/// (localized). The menu bar panel is also on level 101 and nearly the same size (405 × 291)
+/// with an empty title; `ClickAttribution` sets it aside because it opens on a menu bar click.
 /// Titles are only visible with Screen Recording permission, which this app doesn't ask for,
 /// so the size decides when there is no title.
 public enum PromptDetector {

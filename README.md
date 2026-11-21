@@ -38,9 +38,9 @@ curl -fsSL https://raw.githubusercontent.com/YusukeIt0/1pass-chime/main/install.
 
 ## How it works
 
-Twice a second the app looks at the list of windows on screen, which macOS shares with every app without any permission: which app owns each window, its level and its size. 1Password's approval window is a 1Password window on the pop-up level, about 400 points wide. Other 1Password windows don't match: the main window and the menu bar panel sit on other levels, and Quick Access is much wider.
+Twice a second the app looks at the list of windows on screen, which macOS shares with every app without any permission: which app owns each window, its level and its size. 1Password's approval window is a 1Password window on the pop-up level, about 400 points wide. The main window sits on another level and Quick Access is much wider. 1Password's menu bar panel looks almost the same as an approval window, so the app also notes whether a mouse click just landed in a menu bar: a window that opens right after such a click is the panel you opened yourself, and it stays quiet.
 
-- **No permissions**: no Accessibility, Screen Recording or Keychain access is requested.
+- **No permissions**: no Accessibility, Screen Recording or Keychain access is requested. Of your mouse clicks, only whether one landed in a menu bar is used; keystrokes are never observed.
 - **Nothing is read from 1Password**: no vault data, item names or window contents. The app never talks to 1Password.
 - **No servers of its own, no analytics.** Its only network request is the daily update check against this repository's releases.
 - Stored: your preferences in the app's defaults. The update log goes to `~/Library/Application Support/1PassChime/`.
