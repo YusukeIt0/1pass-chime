@@ -22,6 +22,8 @@
     "chooseFile": "Escolher um arquivo…",
     "fileUnavailable": "Não é possível tocar este som, então o sino integrado é usado.",
     "volume": "Volume",
+    "volumeQuieter": "Mais baixo",
+    "volumeMacLevel": "Volume do Mac",
     "whenRequestAppears": "Quando um pedido aparecer",
     "playOnce": "Tocar uma vez",
     "repeatUntilApproved": "Repetir até responder",

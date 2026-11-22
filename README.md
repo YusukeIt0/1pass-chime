@@ -11,7 +11,7 @@ The approval window is easy to miss, especially when it opens on another display
 - Watches for 1Password's approval window and plays a sound as soon as it appears.
 - **Repeat until answered** (default): plays again every few seconds (2–20 s, default 3 s) until you approve or deny. Or **play once**.
 - Menu bar icon: a note that is also a key. It follows the menu bar's light or dark look, and turns **red** while a request is waiting.
-- Sounds: a built-in chime, any macOS alert sound, or an audio file of your own (AIFF, WAV, MP3, M4A, CAF), with its own volume.
+- Sounds: a built-in chime, any macOS alert sound, or an audio file of your own (AIFF, WAV, MP3, M4A, CAF). Its volume is a share of your Mac's output volume: the right end of the slider plays at the Mac's volume (the default), anything left of it is quieter.
 - Menu: **Stop Sound for This Request** (a new request chimes again), **Play Sound**, **Pause Sounds**, Settings, Quit.
 - Opens at login (turned on at first launch; switch it off in Settings).
 - Languages: English, 日本語, 繁體中文, 简体中文, 한국어, Français, Deutsch, ไทย, Português (Brasil), Bahasa Indonesia, Español, Русский and Tiếng Việt. Automatic follows your macOS languages, or choose one in Settings.

@@ -22,6 +22,8 @@
     "chooseFile": "Datei auswählen …",
     "fileUnavailable": "Dieser Ton kann nicht abgespielt werden, daher wird das integrierte Glockenspiel verwendet.",
     "volume": "Lautstärke",
+    "volumeQuieter": "Leiser",
+    "volumeMacLevel": "Mac-Lautstärke",
     "whenRequestAppears": "Wenn eine Anfrage erscheint",
     "playOnce": "Einmal abspielen",
     "repeatUntilApproved": "Wiederholen bis zur Antwort",

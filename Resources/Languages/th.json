@@ -22,6 +22,8 @@
     "chooseFile": "เลือกไฟล์…",
     "fileUnavailable": "เล่นเสียงนี้ไม่ได้ จึงใช้เสียงกริ่งในตัวแทน",
     "volume": "ระดับเสียง",
+    "volumeQuieter": "เบาลง",
+    "volumeMacLevel": "เท่าระดับเสียงของ Mac",
     "whenRequestAppears": "เมื่อมีคำขอปรากฏ",
     "playOnce": "เล่นครั้งเดียว",
     "repeatUntilApproved": "เล่นซ้ำจนกว่าจะตอบ",

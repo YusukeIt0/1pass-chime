@@ -24,7 +24,7 @@ final class AppSettings: ObservableObject {
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         sound = SoundChoice(storedValue: defaults.string(forKey: "sound") ?? "")
-        volume = defaults.object(forKey: "volume") as? Double ?? 0.8
+        volume = defaults.object(forKey: "volume") as? Double ?? 1
         playMode = PlayMode(rawValue: defaults.string(forKey: "playMode") ?? "") ?? .repeatUntilDismissed
         let stored = defaults.double(forKey: "interval")
         interval = AlertPolicy.intervals.contains(stored) ? stored : AlertPolicy.defaultInterval

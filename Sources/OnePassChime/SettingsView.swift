@@ -36,14 +36,7 @@ struct SettingsView: View {
                 if !SoundPlayer.canPlay(settings.sound) {
                     Text(s[.fileUnavailable]).font(.caption).foregroundStyle(.orange)
                 }
-                HStack {
-                    Text(s[.volume])
-                    Image(systemName: "speaker.fill").foregroundStyle(.secondary)
-                    Slider(value: $settings.volume, in: 0...1) { editing in
-                        if !editing { preview() }
-                    }
-                    Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
-                }
+                volumeRow
                 Picker(s[.whenRequestAppears], selection: $settings.playMode) {
                     Text(s[.repeatUntilApproved]).tag(PlayMode.repeatUntilDismissed)
                     Text(s[.playOnce]).tag(PlayMode.once)
@@ -97,6 +90,28 @@ struct SettingsView: View {
         .onAppear {
             launchAtLogin = settings.launchAtLogin
             systemSounds = SystemSounds.names()
+        }
+    }
+
+    /// The volume is a share of the Mac's output volume: the right end plays at the Mac's volume.
+    private var volumeRow: some View {
+        HStack(alignment: .firstTextBaseline) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(s[.volume])
+                Text(settings.volume.formatted(.percent.precision(.fractionLength(0)).locale(s.lang.locale)))
+                    .font(.caption).monospacedDigit().foregroundStyle(.secondary)
+            }
+            Image(systemName: "speaker.fill").foregroundStyle(.secondary)
+            VStack(spacing: 2) {
+                VolumeSlider(value: $settings.volume) { preview() }
+                HStack(alignment: .top) {
+                    Text(s[.volumeQuieter])
+                    Spacer(minLength: 8)
+                    Text(s[.volumeMacLevel]).multilineTextAlignment(.trailing)
+                }
+                .font(.caption).foregroundStyle(.secondary)
+            }
+            Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
         }
     }
 

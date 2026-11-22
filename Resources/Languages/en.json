@@ -20,6 +20,8 @@
     "chooseFile": "Choose a File…",
     "fileUnavailable": "This sound can't be played, so the built-in chime is used.",
     "volume": "Volume",
+    "volumeQuieter": "Quieter",
+    "volumeMacLevel": "Mac volume",
     "whenRequestAppears": "When a request appears",
     "playOnce": "Play once",
     "repeatUntilApproved": "Repeat until answered",

@@ -22,6 +22,8 @@
     "chooseFile": "Choisir un fichier…",
     "fileUnavailable": "Ce son ne peut pas être lu ; le carillon intégré est utilisé.",
     "volume": "Volume",
+    "volumeQuieter": "Plus bas",
+    "volumeMacLevel": "Volume du Mac",
     "whenRequestAppears": "Quand une demande apparaît",
     "playOnce": "Une seule fois",
     "repeatUntilApproved": "Répéter jusqu’à la réponse",

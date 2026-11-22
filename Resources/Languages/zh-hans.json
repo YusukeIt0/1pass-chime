@@ -23,6 +23,8 @@
     "chooseFile": "选择文件…",
     "fileUnavailable": "无法播放此声音，将改用内置铃声。",
     "volume": "音量",
+    "volumeQuieter": "较小声",
+    "volumeMacLevel": "与 Mac 音量相同",
     "whenRequestAppears": "出现请求时",
     "playOnce": "只播放一次",
     "repeatUntilApproved": "重复直到回应",

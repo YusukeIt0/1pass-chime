@@ -20,6 +20,8 @@
     "chooseFile": "ファイルを選択…",
     "fileUnavailable": "このサウンドは再生できないため、内蔵のチャイムを使います。",
     "volume": "音量",
+    "volumeQuieter": "小さめ",
+    "volumeMacLevel": "Macの音量どおり",
     "whenRequestAppears": "リクエストが出たとき",
     "playOnce": "1回だけ鳴らす",
     "repeatUntilApproved": "応答するまで繰り返す",

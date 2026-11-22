@@ -22,6 +22,8 @@
     "chooseFile": "Выбрать файл…",
     "fileUnavailable": "Этот звук нельзя воспроизвести, поэтому используется встроенный колокольчик.",
     "volume": "Громкость",
+    "volumeQuieter": "Тише",
+    "volumeMacLevel": "Громкость Mac",
     "whenRequestAppears": "Когда появляется запрос",
     "playOnce": "Один раз",
     "repeatUntilApproved": "Повторять до ответа",
