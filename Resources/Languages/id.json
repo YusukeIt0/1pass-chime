@@ -23,6 +23,8 @@
     "chooseFile": "Pilih file…",
     "fileUnavailable": "Suara ini tidak dapat diputar, jadi lonceng bawaan yang digunakan.",
     "volume": "Volume",
+    "volumeQuieter": "Lebih pelan",
+    "volumeMacLevel": "Volume Mac",
     "whenRequestAppears": "Saat permintaan muncul",
     "playOnce": "Putar sekali",
     "repeatUntilApproved": "Ulangi sampai dijawab",

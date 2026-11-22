@@ -22,6 +22,8 @@
     "chooseFile": "파일 선택…",
     "fileUnavailable": "이 사운드를 재생할 수 없어 내장 차임을 사용합니다.",
     "volume": "음량",
+    "volumeQuieter": "작게",
+    "volumeMacLevel": "Mac 음량 그대로",
     "whenRequestAppears": "요청이 나타나면",
     "playOnce": "한 번만 재생",
     "repeatUntilApproved": "응답할 때까지 반복",

@@ -22,6 +22,8 @@
     "chooseFile": "Chọn tệp…",
     "fileUnavailable": "Không phát được âm thanh này nên dùng chuông tích hợp.",
     "volume": "Âm lượng",
+    "volumeQuieter": "Nhỏ hơn",
+    "volumeMacLevel": "Bằng âm lượng Mac",
     "whenRequestAppears": "Khi có yêu cầu",
     "playOnce": "Phát một lần",
     "repeatUntilApproved": "Lặp lại đến khi trả lời",

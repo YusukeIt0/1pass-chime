@@ -22,6 +22,8 @@
     "chooseFile": "Elegir un archivo…",
     "fileUnavailable": "Este sonido no se puede reproducir, así que se usa la campana integrada.",
     "volume": "Volumen",
+    "volumeQuieter": "Más bajo",
+    "volumeMacLevel": "Volumen del Mac",
     "whenRequestAppears": "Cuando aparezca una solicitud",
     "playOnce": "Reproducir una vez",
     "repeatUntilApproved": "Repetir hasta responder",

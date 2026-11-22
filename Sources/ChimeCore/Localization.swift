@@ -220,6 +220,8 @@ public enum StringKey: String, CaseIterable, Sendable {
     case chooseFile
     case fileUnavailable
     case volume
+    case volumeQuieter
+    case volumeMacLevel
     case whenRequestAppears
     case playOnce
     case repeatUntilApproved
