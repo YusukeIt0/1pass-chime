@@ -26,7 +26,7 @@ curl -fsSL https://raw.githubusercontent.com/YusukeIt0/1pass-chime/main/install.
 
 The installer picks your CPU's build from the latest GitHub Release, checks its SHA-256 checksum and code signature, installs it to `~/Applications`, and starts it.
 
-> Builds are currently **not notarized by Apple** (no Developer ID signing yet). The checksum and signature checks above confirm the download is intact.
+> From 0.1.2, releases are signed with a Developer ID and notarized by Apple, and the installer checks that the signature belongs to this project's developer. Earlier releases were not notarized.
 
 **Updates:** about once a day the app checks this repository's releases. When a newer version exists, the menu and Settings show **Update**, which installs it and keeps your settings.
 
@@ -56,7 +56,7 @@ scripts/release.sh          # tag and publish a GitHub Release (maintainers)
 scripts/make-icon.sh        # regenerate the app icon from the mark drawn in code
 ```
 
-Swift 5.10+ / Xcode 16+. Set `SIGN_IDENTITY` to a Developer ID Application identity to sign; otherwise builds are ad-hoc signed.
+Swift 5.10+ / Xcode 16+. Set `SIGN_IDENTITY` to a Developer ID Application identity to sign (and `SIGN_KEYCHAIN` if it lives in a separate, unlocked keychain); otherwise builds are ad-hoc signed. Set `NOTARY_PROFILE` to a `notarytool` keychain profile to notarize and staple the per-architecture apps before they are zipped. `scripts/release.sh` requires both and refuses to publish an app that is not notarized.
 
 Developer aids:
 
